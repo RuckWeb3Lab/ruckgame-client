@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 // Mui
 import {
   AppBar,
+  Button,
   Box,
   Container,
   Drawer,
@@ -60,6 +61,7 @@ const DefaultLayout: FC<Props> = ({ children }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             RepezenDogs
           </Typography>
+          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
       <Drawer
