@@ -1,15 +1,30 @@
-import '../styles/globals.css'
-import { createTheme, NextUIProvider } from '@nextui-org/react'
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
+import type { ReactElement, ReactNode } from 'react'
 
-export default function App({ Component, pageProps }: AppProps) {
-  const theme = createTheme({
-    type: "dark", // it could be "light" or "dark"
-  })
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function App({ Component, pageProps }: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+
+  const darkTheme = createTheme({
+    palette: {
+      mode: 'dark',
+    },
+  });
 
   return (
-    <NextUIProvider theme={theme}>
-      <Component {...pageProps} />
-    </NextUIProvider>
+    <ThemeProvider theme={darkTheme}>
+      <CssBaseline />
+      {getLayout(<Component {...pageProps} />)}
+    </ThemeProvider>
   )
 }
