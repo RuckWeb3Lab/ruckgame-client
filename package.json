@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "prettier": "prettier --write src",
+    "eslint": "eslint src",
+    "eslint:fix": "eslint --fix src",
+    "stylelint": "stylelint 'src/**/*.css'",
+    "stylelint:fix": "stylelint --fix 'src/**/*.css'",
+    "lint": "run-s eslint stylelint",
+    "lint:fix": "run-s eslint:fix stylelint:fix prettier",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -18,11 +25,24 @@
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
-    "eslint": "8.30.0",
-    "eslint-config-next": "13.1.1",
+    "@walletconnect/client": "^1.8.0",
+    "@web3auth/base": "^4.0.0",
+    "@web3auth/modal": "^4.2.0",
+    "ethers": "^5.7.2",
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.4"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
+    "eslint": "8.30.0",
+    "eslint-config-next": "13.1.1",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.1",
+    "stylelint": "^14.16.1",
+    "stylelint-config-recess-order": "^3.1.0"
   }
 }

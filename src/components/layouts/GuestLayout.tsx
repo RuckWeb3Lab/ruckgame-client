@@ -1,8 +1,6 @@
 import Head from 'next/head'
 // Mui
-import {
-  Container
-} from '@mui/material';
+import { Container } from '@mui/material'
 // Type
 import type { FC, ReactNode } from 'react'
 
@@ -19,9 +17,7 @@ const GuestLayout: FC<Props> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxWidth="lg">
-        {children}
-      </Container>
+      <Container maxWidth="lg">{children}</Container>
     </>
   )
 }

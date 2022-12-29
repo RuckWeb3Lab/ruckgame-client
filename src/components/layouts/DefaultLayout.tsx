@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
 // Mui
 import {
   AppBar,
@@ -15,13 +16,13 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
-  Typography
-} from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import HandymanIcon from '@mui/icons-material/Handyman';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import HistoryIcon from '@mui/icons-material/History';
-import MenuIcon from '@mui/icons-material/Menu';
+  Typography,
+} from '@mui/material'
+import HomeIcon from '@mui/icons-material/Home'
+import HandymanIcon from '@mui/icons-material/Handyman'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
+import HistoryIcon from '@mui/icons-material/History'
+import MenuIcon from '@mui/icons-material/Menu'
 // Type
 import type { FC, ReactNode } from 'react'
 
@@ -30,14 +31,32 @@ type Props = {
 }
 
 const DefaultLayout: FC<Props> = ({ children }) => {
+  const [web3auth, _] = useContext(Web3AuthContext)
+  const [web3AuthProvider, setWeb3AuthProvider] = useContext(Web3AuthProviderContext)
+  const [anchor, setAnchor] = useState<boolean>(false)
+
   const router = useRouter()
 
-  const [anchor, setAnchor] = useState<boolean>(false)
+  const handlerSignOut = async () => {
+    if (!web3auth) {
+      console.log('web3auth not initialized yet')
+      return
+    }
+    await web3auth.logout()
+    setWeb3AuthProvider(null)
+    router.push('/signin')
+  }
 
   const goto = (path: string) => {
     router.push(path)
     setAnchor(false)
   }
+
+  useEffect(() => {
+    if (!web3AuthProvider) {
+      router.push('/signin')
+    }
+  }, [web3AuthProvider])
 
   return (
     <>
@@ -61,51 +80,45 @@ const DefaultLayout: FC<Props> = ({ children }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             RepezenDogs
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={() => handlerSignOut()}>
+            Sign Out
+          </Button>
         </Toolbar>
       </AppBar>
-      <Drawer
-        anchor="left"
-        variant="temporary"
-        open={anchor}
-        onClose={() => setAnchor(false)}
-      >
-        <Box
-          sx={{ width: 250 }}
-          role="presentation"
-        >
+      <Drawer anchor="left" variant="temporary" open={anchor} onClose={() => setAnchor(false)}>
+        <Box sx={{ width: 250 }} role="presentation">
           <List>
             <ListItem disablePadding>
-              <ListItemButton onClick={() => goto("/")}>
+              <ListItemButton onClick={() => goto('/')}>
                 <ListItemIcon>
-                    <HomeIcon /> 
+                  <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => goto("/mint")}>
+              <ListItemButton onClick={() => goto('/mint')}>
                 <ListItemIcon>
-                    <HandymanIcon /> 
+                  <HandymanIcon />
                 </ListItemIcon>
                 <ListItemText primary="Mint" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => goto("/market")}>
+              <ListItemButton onClick={() => goto('/market')}>
                 <ListItemIcon>
-                    <ShoppingCartIcon /> 
+                  <ShoppingCartIcon />
                 </ListItemIcon>
                 <ListItemText primary="Market" />
               </ListItemButton>
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => goto("/history")}>
+              <ListItemButton onClick={() => goto('/history')}>
                 <ListItemIcon>
-                    <HistoryIcon /> 
+                  <HistoryIcon />
                 </ListItemIcon>
                 <ListItemText primary="History" />
               </ListItemButton>
@@ -114,9 +127,7 @@ const DefaultLayout: FC<Props> = ({ children }) => {
         </Box>
       </Drawer>
 
-      <Container maxWidth="lg">
-        {children}
-      </Container>
+      <Container maxWidth="lg">{children}</Container>
     </>
   )
 }

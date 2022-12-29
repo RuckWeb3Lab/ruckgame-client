@@ -1,4 +1,5 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from 'react'
+import { Web3AuthProviderContext } from '@/pages/_app'
 // Mui
 import {
   Breadcrumbs,
@@ -15,48 +16,49 @@ import {
   Slide,
   Tab,
   Tabs,
-  Typography
+  Typography,
 } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import Grid from '@mui/material/Unstable_Grid2'
 // Component
-import DefaultLayout from "@/components/layouts/DefaultLayout"
+import DefaultLayout from '@/components/layouts/DefaultLayout'
 // Type
 import type { NextPageWithLayout } from '@/pages/_app'
-import type { TransitionProps } from '@mui/material/transitions';
+import type { TransitionProps } from '@mui/material/transitions'
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
-    children: React.ReactElement<any, any>;
+    children: React.ReactElement<any, any>
   },
-  ref: React.Ref<unknown>,
+  ref: React.Ref<unknown>
 ) {
-  return <Slide direction="down" ref={ref} {...props} />;
-});
+  return <Slide direction="down" ref={ref} {...props} />
+})
 
 const MarketPage: NextPageWithLayout = () => {
-  const [tab, setTab] = useState(0);
-  const [purchaseDialog, setPurchaseDialog] = useState(false);
-  const [purchaseDialogTitle, setPurchaseDialogTitle] = useState('');
+  const [provider, setProvider] = useContext(Web3AuthProviderContext)
+  const [tab, setTab] = useState(0)
+  const [purchaseDialog, setPurchaseDialog] = useState(false)
+  const [purchaseDialogTitle, setPurchaseDialogTitle] = useState('')
   const [purchaseEgg, setPurchaseEgg] = useState({
     title: '',
     uri: '',
-    price: ''
+    price: '',
   })
 
   const handleChangeTab = (_: React.SyntheticEvent, newValue: number) => {
-    setTab(newValue);
-  };
+    setTab(newValue)
+  }
 
   const handlerPurchaseEgg = () => {
     setPurchaseDialog(false)
-  };
+  }
 
   const handlerOpenPurchaseDialog = (title: string, uri: string, price: string) => {
     setPurchaseEgg({
       title,
       uri,
-      price
+      price,
     })
     setPurchaseDialog(true)
   }
@@ -94,7 +96,15 @@ const MarketPage: NextPageWithLayout = () => {
                       </Box>
                     </CardContent>
                     <Box sx={{ px: 2 }}>
-                      <Button onClick={() => handlerOpenPurchaseDialog('Rare Egg', 'https://s3.ap-southeast-1.amazonaws.com/twitfi/uploads/accessory/image/twitfi-82d3887a-9b96-47c6-bb6f-998a172b5ba0.gif', '0.01 ETH')}>
+                      <Button
+                        onClick={() =>
+                          handlerOpenPurchaseDialog(
+                            'Rare Egg',
+                            'https://s3.ap-southeast-1.amazonaws.com/twitfi/uploads/accessory/image/twitfi-82d3887a-9b96-47c6-bb6f-998a172b5ba0.gif',
+                            '0.01 ETH'
+                          )
+                        }
+                      >
                         Purchase
                       </Button>
                     </Box>
@@ -124,7 +134,15 @@ const MarketPage: NextPageWithLayout = () => {
                       </Box>
                     </CardContent>
                     <Box sx={{ px: 2 }}>
-                      <Button onClick={() => handlerOpenPurchaseDialog('Common Egg', 'https://s3.ap-southeast-1.amazonaws.com/twitfi/uploads/accessory/image/twitfi-3e35ebd3-cf88-430b-8aba-456bf0226dde.gif', 'Free')}>
+                      <Button
+                        onClick={() =>
+                          handlerOpenPurchaseDialog(
+                            'Common Egg',
+                            'https://s3.ap-southeast-1.amazonaws.com/twitfi/uploads/accessory/image/twitfi-3e35ebd3-cf88-430b-8aba-456bf0226dde.gif',
+                            'Free'
+                          )
+                        }
+                      >
                         Purchase
                       </Button>
                     </Box>
@@ -139,7 +157,9 @@ const MarketPage: NextPageWithLayout = () => {
         <>
           <Box sx={{ py: 3, flexGrow: 1 }}>
             <Grid container spacing={2}>
-              <Grid xs={12} md={6}>Coming soon...</Grid>
+              <Grid xs={12} md={6}>
+                Coming soon...
+              </Grid>
             </Grid>
           </Box>
         </>
@@ -177,10 +197,7 @@ MarketPage.getLayout = function getLayout(page) {
   return (
     <DefaultLayout>
       <Box sx={{ my: 3 }}>
-        <Breadcrumbs
-          separator={<NavigateNextIcon fontSize="small" />}
-          aria-label="breadcrumb"
-        >
+        <Breadcrumbs separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
           <Link underline="hover" color="inherit" href="/">
             Home
           </Link>
