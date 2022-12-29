@@ -1,6 +1,7 @@
-import { useRouter } from 'next/router'
 import { useState } from 'react'
-
+import Head from 'next/head'
+import { useRouter } from 'next/router'
+// Mui
 import {
   AppBar,
   Box,
@@ -20,8 +21,7 @@ import HandymanIcon from '@mui/icons-material/Handyman';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import HistoryIcon from '@mui/icons-material/History';
 import MenuIcon from '@mui/icons-material/Menu';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-
+// Type
 import type { FC, ReactNode } from 'react'
 
 type Props = {
@@ -39,7 +39,12 @@ const DefaultLayout: FC<Props> = ({ children }) => {
   }
 
   return (
-    <div>
+    <>
+      <Head>
+        <title>Repezen Dogs</title>
+        <meta name="description" content="Repezen Dogs" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -110,7 +115,7 @@ const DefaultLayout: FC<Props> = ({ children }) => {
       <Container maxWidth="lg">
         {children}
       </Container>
-    </div>
+    </>
   )
 }
 
