@@ -5,7 +5,7 @@ import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
 import { Button, Box, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 // Component
-import GuestLayout from '@/components/layouts/GuestLayout'
+import GuestLayout from '@/components/layout/GuestLayout'
 // Type
 import type { NextPageWithLayout } from '@/pages/_app'
 

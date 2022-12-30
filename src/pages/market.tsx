@@ -1,5 +1,6 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useCallback } from 'react'
 import { Web3AuthProviderContext } from '@/pages/_app'
+import { useRepDogs } from '@/globals/hooks/contracts'
 // Mui
 import {
   Breadcrumbs,
@@ -8,12 +9,7 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
   Link,
-  Slide,
   Tab,
   Tabs,
   Typography,
@@ -21,38 +17,82 @@ import {
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 import Grid from '@mui/material/Unstable_Grid2'
 // Component
-import DefaultLayout from '@/components/layouts/DefaultLayout'
+import DefaultLayout from '@/components/layout/DefaultLayout'
+import PurchaseDialog from '@/components/dialog/PurchaseDialog'
+import ActionAlert from '@/components/alert/ActionAlert'
 // Type
 import type { NextPageWithLayout } from '@/pages/_app'
-import type { TransitionProps } from '@mui/material/transitions'
-
-const Transition = React.forwardRef(function Transition(
-  props: TransitionProps & {
-    children: React.ReactElement<any, any>
-  },
-  ref: React.Ref<unknown>
-) {
-  return <Slide direction="down" ref={ref} {...props} />
-})
+// Util
+import { babyMint } from '@/asyncs/writeContract'
+import RPC from '@/globals/ethersRPC'
+import { ethers } from 'ethers'
+import IRepDog from '@/assets/abis/IRepDog.json'
 
 const MarketPage: NextPageWithLayout = () => {
   const [provider, setProvider] = useContext(Web3AuthProviderContext)
   const [tab, setTab] = useState(0)
+  const [actionAlert, setActionAlert] = useState<boolean>(false)
+  const [actionAlertOptions, setActionAlertOptions] = useState<any>({
+    severity: 'error',
+    title: '',
+    message: '',
+  })
   const [purchaseDialog, setPurchaseDialog] = useState(false)
-  const [purchaseDialogTitle, setPurchaseDialogTitle] = useState('')
   const [purchaseEgg, setPurchaseEgg] = useState({
     title: '',
     uri: '',
     price: '',
   })
+  const repDogsContract = useRepDogs()
 
   const handleChangeTab = (_: React.SyntheticEvent, newValue: number) => {
     setTab(newValue)
   }
 
-  const handlerPurchaseEgg = () => {
-    setPurchaseDialog(false)
-  }
+  const handlerPurchaseEgg = useCallback(() => {
+    ;(async () => {
+      try {
+        // @ts-ignore
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const account = await provider.send('eth_requestAccounts', [])
+        console.log('account: ', account)
+        const signer = provider.getSigner()
+        console.log('signer: ', signer)
+
+        const daiContract = new ethers.Contract(
+          '0xf3c199c136C05ea69E4A82dCEF6dC14990d0BFDc',
+          IRepDog,
+          provider
+        )
+
+        const daiWithSigner = daiContract.connect(signer)
+
+        const tx = await daiWithSigner.babyMint()
+
+        console.log('tx: ', tx)
+        /*
+        const account = await getAccounts()
+        if (account) {
+          console.log("account: ", account)
+        }
+        const response = await babyMint(repDogsContract)
+        await response.wait()
+        console.log("response: ", response)
+        */
+      } catch (error: any) {
+        console.error('== Error!! ==')
+        console.error(error)
+        setActionAlertOptions({
+          severity: 'error',
+          title: 'Warning',
+          message: error.error.message,
+        })
+        setActionAlert(true)
+      }
+
+      setPurchaseDialog(false)
+    })()
+  }, [])
 
   const handlerOpenPurchaseDialog = (title: string, uri: string, price: string) => {
     setPurchaseEgg({
@@ -61,6 +101,15 @@ const MarketPage: NextPageWithLayout = () => {
       price,
     })
     setPurchaseDialog(true)
+  }
+
+  const getAccounts = async () => {
+    if (!provider) {
+      console.log('provider not initialized yet')
+      return
+    }
+    const rpc = new RPC(provider)
+    return await rpc.getAccounts()
   }
 
   return (
@@ -165,30 +214,14 @@ const MarketPage: NextPageWithLayout = () => {
         </>
       )}
 
-      <Dialog
+      <PurchaseDialog
         open={purchaseDialog}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => setPurchaseDialog(false)}
-      >
-        <DialogTitle>{purchaseEgg.title}</DialogTitle>
-        <DialogContent>
-          <Card sx={{ display: 'flex' }}>
-            <CardMedia
-              component="img"
-              sx={{ width: 151 }}
-              image={purchaseEgg.uri}
-              alt="Paella dish"
-            />
-          </Card>
-          <Typography component="div" variant="body1" sx={{ pt: 2 }}>
-            Price: {purchaseEgg.price}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => handlerPurchaseEgg()}>Purchase</Button>
-        </DialogActions>
-      </Dialog>
+        setOpen={setPurchaseDialog}
+        options={purchaseEgg}
+        handlerPurchaseEgg={handlerPurchaseEgg}
+      />
+
+      <ActionAlert open={actionAlert} setOpen={setActionAlert} options={actionAlertOptions} />
     </>
   )
 }

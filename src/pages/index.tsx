@@ -1,7 +1,7 @@
 // Mui
 import { Breadcrumbs, Box, Typography } from '@mui/material'
 // Component
-import DefaultLayout from '@/components/layouts/DefaultLayout'
+import DefaultLayout from '@/components/layout/DefaultLayout'
 // Type
 import type { NextPageWithLayout } from '@/pages/_app'
 

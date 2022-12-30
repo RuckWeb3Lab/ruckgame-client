@@ -1,7 +1,7 @@
 import type { NextPageWithLayout } from '@/pages/_app'
 import { Breadcrumbs, Box, Link, Typography } from '@mui/material'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
-import DefaultLayout from '@/components/layouts/DefaultLayout'
+import DefaultLayout from '@/components/layout/DefaultLayout'
 
 const MintPage: NextPageWithLayout = () => {
   return <p>Coming soon...</p>

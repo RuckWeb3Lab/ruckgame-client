@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
 // Mui
 import {
+  Alert,
+  AlertTitle,
   AppBar,
   Button,
   Box,
@@ -15,6 +17,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Snackbar,
+  Stack,
   Toolbar,
   Typography,
 } from '@mui/material'
@@ -34,6 +38,7 @@ const DefaultLayout: FC<Props> = ({ children }) => {
   const [web3auth, _] = useContext(Web3AuthContext)
   const [web3AuthProvider, setWeb3AuthProvider] = useContext(Web3AuthProviderContext)
   const [anchor, setAnchor] = useState<boolean>(false)
+  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const router = useRouter()
 
