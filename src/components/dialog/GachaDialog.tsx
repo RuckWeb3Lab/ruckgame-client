@@ -20,7 +20,7 @@ import {
 } from '@mui/material'
 import type { TransitionProps } from '@mui/material/transitions'
 
-type Options = {
+export type GachaDialogOptions = {
   title: string
   uri: string
   price: string
@@ -29,8 +29,8 @@ type Options = {
 type Props = {
   open: boolean
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
-  options: Options
-  handlerPurchaseEgg: any
+  options: GachaDialogOptions
+  handlerGacha: any
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -42,7 +42,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="down" ref={ref} {...props} />
 })
 
-const PurchaseDialog = ({ open, setOpen, options, handlerPurchaseEgg }: Props) => {
+const GachaDialog = ({ open, setOpen, options, handlerGacha }: Props) => {
   return (
     <>
       <Dialog
@@ -61,11 +61,11 @@ const PurchaseDialog = ({ open, setOpen, options, handlerPurchaseEgg }: Props) =
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handlerPurchaseEgg()}>Purchase</Button>
+          <Button onClick={() => handlerGacha()}>Run Gacha</Button>
         </DialogActions>
       </Dialog>
     </>
   )
 }
 
-export default PurchaseDialog
+export default GachaDialog

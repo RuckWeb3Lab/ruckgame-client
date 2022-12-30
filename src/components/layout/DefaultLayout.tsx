@@ -112,11 +112,11 @@ const DefaultLayout: FC<Props> = ({ children }) => {
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton onClick={() => goto('/market')}>
+              <ListItemButton onClick={() => goto('/gacha')}>
                 <ListItemIcon>
                   <ShoppingCartIcon />
                 </ListItemIcon>
-                <ListItemText primary="Market" />
+                <ListItemText primary="Gacha" />
               </ListItemButton>
             </ListItem>
 

@@ -8,6 +8,23 @@ export default class EthereumRpc {
     this.provider = provider
   }
 
+  async getSigner() {
+    try {
+      const ethersProvider = new ethers.providers.Web3Provider(this.provider)
+      return ethersProvider.getSigner()
+    } catch (error) {
+      return error
+    }
+  }
+
+  async getContract(contractAddress: string, abi: any, signer: any) {
+    try {
+      return new ethers.Contract(contractAddress, abi, signer)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async getChainId(): Promise<any> {
     try {
       const ethersProvider = new ethers.providers.Web3Provider(this.provider)

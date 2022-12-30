@@ -1,9 +1,5 @@
 // Mui
-import {
-  Alert,
-  AlertTitle,
-  Snackbar,
-} from '@mui/material'
+import { Alert, AlertTitle, Snackbar } from '@mui/material'
 
 type Options = {
   severity: string
