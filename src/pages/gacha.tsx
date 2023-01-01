@@ -13,7 +13,7 @@ import NftGachaTabPanel from '@/components/tab/gacha/NftGachaPanel'
 import type { NextPageWithLayout } from '@/pages/_app'
 import type { GachaDialogOptions } from '@/components/dialog/GachaDialog'
 // Util
-import RepDogsContract from '@/asyncs/repDogsContract'
+import repezenDoxxGameContract from '@/asyncs/repezenDoxxGameContract'
 
 const GachaPage: NextPageWithLayout = () => {
   const [provider, _] = useContext(Web3AuthProviderContext)
@@ -55,13 +55,20 @@ const GachaPage: NextPageWithLayout = () => {
    */
   const handlerNftGacha = useCallback(async () => {
     try {
-      const ethersRpc = new RepDogsContract(provider)
-      const repDogsContract = await ethersRpc.getContract()
+      const ethersRpc = new repezenDoxxGameContract(provider)
+      const gameContract = await ethersRpc.getContract()
 
-      if (!repDogsContract) return
-      const txReceipt = await repDogsContract.babyMint()
-      const tx = await txReceipt.wait()
-      console.log('tx: ', tx)
+      if (!gameContract) return
+      const txReceipt = await gameContract.rollFreeGacha()
+      txReceipt.wait().then((tx: any) => {
+        console.log('tx: ', tx)
+        setActionAlertOptions({
+          severity: 'success',
+          title: 'Success',
+          message: 'Congrats!!',
+        })
+        setActionAlert(true)
+      })
     } catch (error: any) {
       console.error(error)
       setActionAlertOptions({
@@ -72,7 +79,7 @@ const GachaPage: NextPageWithLayout = () => {
       setActionAlert(true)
     }
     setGachaDialog(false)
-  }, [])
+  }, [provider])
 
   /**
    * handleChangeTab

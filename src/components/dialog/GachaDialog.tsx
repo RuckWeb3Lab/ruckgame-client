@@ -61,7 +61,7 @@ const GachaDialog = ({ open, setOpen, options, handlerGacha }: Props) => {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handlerGacha()}>Run Gacha</Button>
+          <Button onClick={() => handlerGacha()}>Play Gacha</Button>
         </DialogActions>
       </Dialog>
     </>

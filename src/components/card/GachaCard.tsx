@@ -6,10 +6,11 @@ type Props = {
   imageSrc: string
   title: string
   price: string
+  disabled: boolean
   handlerGacha: any
 }
 
-const GachaCard = ({ imageSrc, title, price, handlerGacha }: Props) => {
+const GachaCard = ({ imageSrc, title, price, disabled, handlerGacha }: Props) => {
   return (
     <>
       <Card sx={{ display: 'flex' }}>
@@ -30,6 +31,7 @@ const GachaCard = ({ imageSrc, title, price, handlerGacha }: Props) => {
           <Box sx={{ px: 1 }}>
             <Button
               variant="outlined"
+              disabled={disabled}
               startIcon={<RocketLaunchIcon />}
               onClick={() => handlerGacha(title, imageSrc, price)}
             >

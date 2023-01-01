@@ -1,8 +1,9 @@
 // Mui
 import { Alert, AlertTitle, Snackbar } from '@mui/material'
+import { AlertColor } from '@mui/material/Alert/Alert'
 
 type Options = {
-  severity: string
+  severity: AlertColor
   title: string
   message: string
 }
@@ -24,7 +25,7 @@ const ActionAlert = ({ open, setOpen, options }: Props) => {
       autoHideDuration={6000}
       onClose={() => setOpen(false)}
     >
-      <Alert variant="outlined" severity="error" sx={{ width: '100%' }}>
+      <Alert variant="outlined" severity={options.severity} sx={{ width: '100%' }}>
         <AlertTitle>{options.title}</AlertTitle>
         {options.message}
       </Alert>
