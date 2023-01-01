@@ -1,5 +1,6 @@
 import { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
+import { SERVICE_NAME } from '@/globals/constants'
 import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
 // Mui
 import { Button, Box, Typography } from '@mui/material'
@@ -37,13 +38,13 @@ const SigninPage: NextPageWithLayout = () => {
     if (web3AuthProvider) {
       router.push('/')
     }
-  }, [web3AuthProvider])
+  }, [web3AuthProvider, router])
 
   return (
     <Grid container spacing={2} sx={{ py: 15 }}>
       <Grid xs={12} display="flex" justifyContent="center" alignItems="center">
         <Typography component="div" variant="h6" sx={{ fontWeight: 'bold', pb: 3 }}>
-          Welcom to RepezenDogs!!
+          Welcom to {SERVICE_NAME}!!
         </Typography>
       </Grid>
       <Grid xs={12} display="flex" justifyContent="center" alignItems="center">

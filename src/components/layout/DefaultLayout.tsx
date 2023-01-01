@@ -1,11 +1,9 @@
 import { useEffect, useState, useContext } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
+import { SERVICE_NAME } from '@/globals/constants'
 // Mui
 import {
-  Alert,
-  AlertTitle,
   AppBar,
   Button,
   Box,
@@ -17,8 +15,6 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
-  Snackbar,
-  Stack,
   Toolbar,
   Typography,
 } from '@mui/material'
@@ -29,6 +25,8 @@ import HistoryIcon from '@mui/icons-material/History'
 import MenuIcon from '@mui/icons-material/Menu'
 // Type
 import type { FC, ReactNode } from 'react'
+// Util
+import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
 
 type Props = {
   children: ReactNode
@@ -38,7 +36,6 @@ const DefaultLayout: FC<Props> = ({ children }) => {
   const [web3auth, _] = useContext(Web3AuthContext)
   const [web3AuthProvider, setWeb3AuthProvider] = useContext(Web3AuthProviderContext)
   const [anchor, setAnchor] = useState<boolean>(false)
-  const [openSnackbar, setOpenSnackbar] = useState(false)
 
   const router = useRouter()
 
@@ -61,13 +58,13 @@ const DefaultLayout: FC<Props> = ({ children }) => {
     if (!web3AuthProvider) {
       router.push('/signin')
     }
-  }, [web3AuthProvider])
+  }, [web3AuthProvider, router])
 
   return (
     <>
       <Head>
-        <title>Repezen Dogs</title>
-        <meta name="description" content="Repezen Dogs" />
+        <title>{SERVICE_NAME}</title>
+        <meta name="description" content={SERVICE_NAME} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <AppBar position="static">
@@ -83,7 +80,7 @@ const DefaultLayout: FC<Props> = ({ children }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            RepezenDogs
+            {SERVICE_NAME}
           </Typography>
           <Button color="inherit" onClick={() => handlerSignOut()}>
             Sign Out

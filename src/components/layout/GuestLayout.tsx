@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { SERVICE_NAME } from '@/globals/constants'
 // Mui
 import { Container } from '@mui/material'
 // Type
@@ -12,8 +13,8 @@ const GuestLayout: FC<Props> = ({ children }) => {
   return (
     <>
       <Head>
-        <title>Repezen Dogs</title>
-        <meta name="description" content="Repezen Dogs" />
+        <title>{SERVICE_NAME}</title>
+        <meta name="description" content={SERVICE_NAME} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
