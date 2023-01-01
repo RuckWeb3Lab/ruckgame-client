@@ -2,6 +2,8 @@
 
 Web3ゲームのフロントエンド
 
+<https://ruckgame-client.vercel.app/>
+
 ## Quick start
 
 ```bash

@@ -14,7 +14,7 @@ export default class RepesenDoxxGameContract {
     try {
       const ethersProvider = new ethers.providers.Web3Provider(this.provider)
       const signer = await ethersProvider.getSigner()
-      return new ethers.Contract(config.repDogsContractAddress ?? '', IRepDogAbi, signer)
+      return new ethers.Contract(config.ruckgameContractAddress ?? '', IRepDogAbi, signer)
     } catch (error: any) {
       return error
     }

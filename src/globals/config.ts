@@ -1,5 +1,5 @@
 const config = {
-  repDogsContractAddress: process.env.NEXT_PUBLIC_RUCKGAME_CONTRACT_ADDRESS,
+  ruckgameContractAddress: process.env.NEXT_PUBLIC_RUCKGAME_CONTRACT_ADDRESS,
 }
 
 Object.entries(config).forEach(([key, value]) => {
