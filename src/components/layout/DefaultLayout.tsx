@@ -91,7 +91,7 @@ const DefaultLayout: FC<Props> = ({ children }) => {
         <Box sx={{ width: 250 }} role="presentation">
           <List>
             <ListItem disablePadding>
-              <ListItemButton onClick={() => goto('/')}>
+              <ListItemButton onClick={() => goto('/home')}>
                 <ListItemIcon>
                   <HomeIcon />
                 </ListItemIcon>

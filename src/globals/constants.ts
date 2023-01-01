@@ -1,1 +1,1 @@
-export const SERVICE_NAME = "RuckGame for Web3"
+export const SERVICE_NAME = 'RuckGame for Web3'

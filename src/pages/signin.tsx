@@ -36,34 +36,40 @@ const SigninPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (web3AuthProvider) {
-      router.push('/')
+      router.push('/home')
     }
   }, [web3AuthProvider, router])
 
   return (
     <Grid container spacing={2} sx={{ py: 15 }}>
       <Grid xs={12} display="flex" justifyContent="center" alignItems="center">
-        <Typography component="div" variant="h6" sx={{ fontWeight: 'bold', pb: 3 }}>
+        <Typography
+          component="div"
+          variant="h6"
+          sx={{ fontWeight: 'bold', pb: 3, textAlign: 'center' }}
+        >
           Welcom to {SERVICE_NAME}!!
+          <br />
+          Prototype Game
         </Typography>
       </Grid>
       <Grid xs={12} display="flex" justifyContent="center" alignItems="center">
         <Box sx={{ width: 200 }}>
-          {web3AuthProvider ? (
-            <Button variant="contained" sx={{ mx: 1 }} fullWidth onClick={() => handlerSingOut()}>
-              SIGN OUT
-            </Button>
-          ) : (
-            <Button variant="contained" sx={{ mx: 1 }} fullWidth onClick={() => handlerSingIn()}>
-              CONNECT WALLET
-            </Button>
-          )}
+          <Button variant="contained" sx={{ mx: 1 }} fullWidth onClick={() => handlerSingIn()}>
+            CONNECT WALLET
+          </Button>
         </Box>
       </Grid>
       <Grid xs={12} display="flex" justifyContent="center" alignItems="center">
         <Box sx={{ width: 200 }}>
-          <Button variant="contained" sx={{ mx: 1 }} fullWidth>
-            CONNECT TWITTER
+          <Button
+            variant="outlined"
+            color="warning"
+            sx={{ mx: 1 }}
+            fullWidth
+            onClick={() => router.push('/')}
+          >
+            RETURN
           </Button>
         </Box>
       </Grid>
