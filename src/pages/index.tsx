@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import { SERVICE_NAME } from '@/globals/constants'
 // Mui
-import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material'
+import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 // Component
 import GuestLayout from '@/components/layout/GuestLayout'
@@ -29,6 +29,14 @@ const IndexPage: NextPageWithLayout = () => {
                 <br />
                 現在、開発を進めています。
               </Typography>
+              <Box sx={{ pb: 4, textAlign: 'center' }}>
+                <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                  使用言語
+                </Typography>
+                <Chip sx={{ mr: 1 }} label="React" />
+                <Chip sx={{ mr: 1 }} label="Node.js" />
+                <Chip sx={{ mr: 1 }} label="Solidity" />
+              </Box>
               <Button variant="contained" color="info" onClick={() => router.push('/signin')}>
                 open beta app
               </Button>
