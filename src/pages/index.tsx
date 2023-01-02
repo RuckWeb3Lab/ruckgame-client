@@ -14,7 +14,7 @@ const IndexPage: NextPageWithLayout = () => {
   return (
     <>
       <Box sx={{ pt: 20, pb: 10, flexGrow: 1 }}>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} justifyContent="center">
           <Grid xs={12}>
             <Box sx={{ pt: 6, pb: 25, textAlign: 'center' }}>
               <Typography
@@ -41,6 +41,28 @@ const IndexPage: NextPageWithLayout = () => {
                 open beta app
               </Button>
             </Box>
+          </Grid>
+
+          <Grid xs={12} md={4}>
+            <Card>
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div" sx={{ fontWeight: 'bold' }}>
+                  Whitepaper
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  ゲームに関する概要や設計を記載
+                </Typography>
+              </CardContent>
+              <CardActions>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  onClick={() => router.push('https://ruckgame.gitbook.io/untitled/')}
+                >
+                  ホワイトペーパーを見る
+                </Button>
+              </CardActions>
+            </Card>
           </Grid>
 
           <Grid xs={12} md={4}>
