@@ -7,14 +7,14 @@ import DefaultLayout from '@/components/layout/DefaultLayout'
 import type { NextPageWithLayout } from '@/pages/_app'
 // Util
 import { Web3AuthProviderContext } from '@/pages/_app'
-import RepezenDoxxGameContract from '@/asyncs/repezenDoxxGameContract'
+import RuckGameContract from '@/asyncs/ruckGameContract'
 
 const HomePage: NextPageWithLayout = () => {
   const [provider, _] = useContext(Web3AuthProviderContext)
 
   useEffect(() => {
     if (!provider) return
-    const ethersRpc = new RepezenDoxxGameContract(provider)
+    const ethersRpc = new RuckGameContract(provider)
     //
   }, [provider])
 

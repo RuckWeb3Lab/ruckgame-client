@@ -13,7 +13,7 @@ import NftGachaTabPanel from '@/components/tab/gacha/NftGachaPanel'
 import type { NextPageWithLayout } from '@/pages/_app'
 import type { GachaDialogOptions } from '@/components/dialog/GachaDialog'
 // Util
-import repezenDoxxGameContract from '@/asyncs/repezenDoxxGameContract'
+import ruckGameContract from '@/asyncs/ruckGameContract'
 
 const GachaPage: NextPageWithLayout = () => {
   const [provider, _] = useContext(Web3AuthProviderContext)
@@ -55,7 +55,7 @@ const GachaPage: NextPageWithLayout = () => {
    */
   const handlerNftGacha = useCallback(async () => {
     try {
-      const ethersRpc = new repezenDoxxGameContract(provider)
+      const ethersRpc = new ruckGameContract(provider)
       const gameContract = await ethersRpc.getContract()
 
       if (!gameContract) return

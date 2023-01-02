@@ -1,9 +1,9 @@
 import type { SafeEventEmitterProvider } from '@web3auth/base'
 import { ethers } from 'ethers'
-import IRepDogAbi from '@/assets/abis/IRepezenDoxxGame.json'
+import IRuckGame from '@/assets/abis/IRuckGame.json'
 import config from '@/globals/config'
 
-export default class RepesenDoxxGameContract {
+export default class RuckGameContract {
   private provider: SafeEventEmitterProvider
 
   constructor(provider: SafeEventEmitterProvider) {
@@ -14,7 +14,7 @@ export default class RepesenDoxxGameContract {
     try {
       const ethersProvider = new ethers.providers.Web3Provider(this.provider)
       const signer = await ethersProvider.getSigner()
-      return new ethers.Contract(config.ruckgameContractAddress ?? '', IRepDogAbi, signer)
+      return new ethers.Contract(config.ruckgameContractAddress ?? '', IRuckGame, signer)
     } catch (error: any) {
       return error
     }

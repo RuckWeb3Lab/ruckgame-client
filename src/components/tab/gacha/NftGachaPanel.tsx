@@ -6,7 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 import GachaCard from '@/components/card/GachaCard'
 // Util
 import { Web3AuthProviderContext } from '@/pages/_app'
-import RepezenDoxxGameContract from '@/asyncs/repezenDoxxGameContract'
+import RuckGameContract from '@/asyncs/ruckGameContract'
 
 type Props = {
   handlerGacha: any
@@ -19,11 +19,11 @@ const NftGachaTabPanel = ({ handlerGacha }: Props) => {
 
   useEffect(() => {
     if (!provider) return
-    const ethersRpc = new RepezenDoxxGameContract(provider)
+    const ethersRpc = new RuckGameContract(provider)
     ethersRpc
       .getContract()
-      .then((repezenDoxxGameContract) => {
-        return repezenDoxxGameContract.isFreeGacha()
+      .then((ruckGameContract) => {
+        return ruckGameContract.isFreeGacha()
       })
       .then((response) => {
         setIsFreeGacha(!response)
