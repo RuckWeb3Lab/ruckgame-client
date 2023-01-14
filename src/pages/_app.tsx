@@ -7,6 +7,7 @@ import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 import { Web3Auth } from '@web3auth/modal'
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
+import { web3AuthClientId } from '@/globals/config'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -15,9 +16,6 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
-
-const clientId =
-  'BAVw6bQNDV2dWhShQ-dKV6dxuW2_zt50WdPMSpVzNUTCCFOYnSeZH_caCB6n9mu7o1-kmTtQCi95EtCb14h3e7c'
 
 export const Web3AuthContext = createContext<any>([null, () => {}])
 export const Web3AuthProviderContext = createContext<any>([null, () => {}])
@@ -30,7 +28,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     const init = async () => {
       try {
         const web3auth = new Web3Auth({
-          clientId,
+          clientId: web3AuthClientId,
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
             chainId: '0x5',
