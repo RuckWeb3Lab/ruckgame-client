@@ -8,17 +8,18 @@ import DefaultLayout from '@/components/layout/DefaultLayout'
 import type { NextPageWithLayout } from '@/pages/_app'
 // Util
 import { Web3AuthContext } from '@/pages/_app'
-import { Web3AuthProviderContext } from '@/pages/_app'
+import { EthersProviderContext } from '@/pages/_app'
 import RuckNftContract from '@/asyncs/ruckNftContract'
 
 const HomePage: NextPageWithLayout = () => {
   const [web3auth, _] = useContext(Web3AuthContext)
-  const [provider, __] = useContext(Web3AuthProviderContext)
+  const [ethersProvider, __] = useContext(EthersProviderContext)
 
   const [account, setAccount] = useState<string>('')
   const [contract, setContract] = useState<any>(null)
   const [metadataList, setMetadataList] = useState<any>([])
 
+  /*
   useEffect(() => {
     if (!web3auth) return
     web3auth.connect()
@@ -28,14 +29,14 @@ const HomePage: NextPageWithLayout = () => {
   }, [web3auth])
 
   useEffect(() => {
-    if (!provider) return
-    const ethersRpc = new RuckNftContract(provider)
+    if (!ethersProvider) return
+    const ethersRpc = new RuckNftContract(ethersProvider)
     ethersRpc
       .getContract()
       .then((ruckNftContract) => {
         setContract(ruckNftContract)
       })
-  }, [provider])
+  }, [ethersProvider])
 
   useEffect(() => {
     if (!contract) return
@@ -84,6 +85,7 @@ const HomePage: NextPageWithLayout = () => {
       setMetadataList(dataList)
     })()
   }, [contract, account])
+  */
 
   return (
     <Box sx={{ py: 3, flexGrow: 1 }}>

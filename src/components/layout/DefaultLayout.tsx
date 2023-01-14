@@ -26,26 +26,29 @@ import MenuIcon from '@mui/icons-material/Menu'
 // Type
 import type { FC, ReactNode } from 'react'
 // Util
-import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
+import { Web3AuthContext, EthersProviderContext } from '@/pages/_app'
+import { modalConfig } from '@/globals/web3AuthConfig'
 
 type Props = {
   children: ReactNode
 }
 
 const DefaultLayout: FC<Props> = ({ children }) => {
-  const [web3auth, _] = useContext(Web3AuthContext)
-  const [web3AuthProvider, setWeb3AuthProvider] = useContext(Web3AuthProviderContext)
+  const [web3Auth, _] = useContext(Web3AuthContext)
+  const [ethersProvider, setEthersProvider] = useContext(EthersProviderContext)
   const [anchor, setAnchor] = useState<boolean>(false)
 
   const router = useRouter()
 
   const handlerSignOut = async () => {
-    if (!web3auth) {
+    if (!web3Auth) {
       console.log('web3auth not initialized yet')
       return
     }
-    await web3auth.logout()
-    setWeb3AuthProvider(null)
+
+    await web3Auth.logout()
+    await web3Auth.initModal({ modalConfig })
+
     router.push('/signin')
   }
 
@@ -55,10 +58,10 @@ const DefaultLayout: FC<Props> = ({ children }) => {
   }
 
   useEffect(() => {
-    if (!web3AuthProvider) {
+    if (web3Auth && web3Auth.status !== 'connected') {
       router.push('/signin')
     }
-  }, [web3AuthProvider, router])
+  }, [web3Auth, router])
 
   return (
     <>

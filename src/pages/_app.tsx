@@ -19,24 +19,23 @@ type AppPropsWithLayout = AppProps & {
 
 export const WalletContext = createContext<any>([null, () => {}])
 export const Web3AuthContext = createContext<any>([null, () => {}])
-export const Web3AuthProviderContext = createContext<any>([null, () => {}])
+export const EthersProviderContext = createContext<any>([null, () => {}])
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [wallet, setWallet] = useState<any>(null)
-  const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null)
-  const [web3AuthProvider, setWeb3AuthProvider] = useState<SafeEventEmitterProvider | null>(null)
+  const [web3auth, setWeb3Auth] = useState<Web3Auth | null>(null)
+  const [ethersProvider, setEthersProvider] = useState<SafeEventEmitterProvider | null>(null)
 
   useEffect(() => {
     const init = async () => {
       try {
-        const web3auth = new Web3Auth(web3AuthOptions)
+        const web3authInstance = new Web3Auth(web3AuthOptions)
         const openloginAdapter = new OpenloginAdapter(openloginAdapterOptions)
-        web3auth.configureAdapter(openloginAdapter)
-        setWeb3auth(web3auth)
+        web3authInstance.configureAdapter(openloginAdapter)
 
-        await web3auth.initModal({ modalConfig })
+        await web3authInstance.initModal({ modalConfig })
 
-        setWeb3AuthProvider(web3auth.provider)
+        setWeb3Auth(web3authInstance)
       } catch (error) {
         console.error(error)
       }
@@ -54,13 +53,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <WalletContext.Provider value={[wallet, setWallet]}>
-      <Web3AuthContext.Provider value={[web3auth, setWeb3auth]}>
-        <Web3AuthProviderContext.Provider value={[web3AuthProvider, setWeb3AuthProvider]}>
+      <Web3AuthContext.Provider value={[web3auth, setWeb3Auth]}>
+        <EthersProviderContext.Provider value={[ethersProvider, setEthersProvider]}>
           <ThemeProvider theme={darkTheme}>
             <CssBaseline />
             {getLayout(<Component {...pageProps} />)}
           </ThemeProvider>
-        </Web3AuthProviderContext.Provider>
+        </EthersProviderContext.Provider>
       </Web3AuthContext.Provider>
     </WalletContext.Provider>
   )

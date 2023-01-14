@@ -1,7 +1,8 @@
-import { useEffect, useContext } from 'react'
+import { useEffect, useContext, useState } from 'react'
 import { useRouter } from 'next/router'
 import { SERVICE_NAME } from '@/globals/constants'
-import { Web3AuthContext, Web3AuthProviderContext } from '@/pages/_app'
+import { Web3AuthContext, EthersProviderContext, WalletContext } from '@/pages/_app'
+import { ethers } from 'ethers'
 // Mui
 import { Button, Box, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
@@ -11,25 +12,28 @@ import GuestLayout from '@/components/layout/GuestLayout'
 import type { NextPageWithLayout } from '@/pages/_app'
 
 const SigninPage: NextPageWithLayout = () => {
-  const [web3auth, _] = useContext(Web3AuthContext)
-  const [web3AuthProvider, setWeb3AuthProvider] = useContext(Web3AuthProviderContext)
+  const [wallet, setWallet] = useContext(WalletContext)
+  const [web3Auth, setWeb3Auth] = useContext(Web3AuthContext)
+  const [ethersProvider, setEthersProvider] = useContext(EthersProviderContext)
 
   const router = useRouter()
 
   const handlerSingIn = async () => {
-    if (!web3auth) {
-      console.log('web3auth not initialized yet')
-      return
-    }
-    const connections = await web3auth.connect()
-    setWeb3AuthProvider(connections)
+    const connections = await web3Auth.connect()
+    setWeb3Auth(connections)
+
+    router.push('/home')
+
+    // const provider = new ethers.providers.Web3Provider(web3auth.provider)
+    // console.log(provider)
+    // setEthersProvider(provider)
   }
 
   useEffect(() => {
-    if (web3AuthProvider) {
+    if (web3Auth && web3Auth.status === 'connected') {
       router.push('/home')
     }
-  }, [web3AuthProvider, router])
+  }, [web3Auth, router])
 
   return (
     <Grid container spacing={2} sx={{ py: 15 }}>
