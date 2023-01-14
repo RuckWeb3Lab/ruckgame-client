@@ -25,15 +25,6 @@ const SigninPage: NextPageWithLayout = () => {
     setWeb3AuthProvider(connections)
   }
 
-  const handlerSingOut = async () => {
-    if (!web3auth) {
-      console.log('web3auth not initialized yet')
-      return
-    }
-    await web3auth.logout()
-    setWeb3AuthProvider(null)
-  }
-
   useEffect(() => {
     if (web3AuthProvider) {
       router.push('/home')
