@@ -1,4 +1,5 @@
 import config from '@/globals/config'
+import { SERVICE_NAME } from '@/globals/constants'
 import { WALLET_ADAPTERS, CHAIN_NAMESPACES, WALLET_ADAPTER_TYPE } from '@web3auth/base'
 import type { Web3AuthOptions, ModalConfig } from '@web3auth/modal'
 import type { OpenloginAdapterOptions } from '@web3auth/openlogin-adapter'
@@ -23,10 +24,10 @@ export const openloginAdapterOptions: OpenloginAdapterOptions = {
     network: 'cyan',
     uxMode: 'popup',
     whiteLabel: {
-      name: 'Your app Name',
+      name: SERVICE_NAME,
       logoLight: 'https://web3auth.io/images/w3a-L-Favicon-1.svg',
       logoDark: 'https://web3auth.io/images/w3a-D-Favicon-1.svg',
-      defaultLanguage: 'en',
+      defaultLanguage: 'ja',
       dark: true, // whether to enable dark mode. defaultValue: false
     },
   },

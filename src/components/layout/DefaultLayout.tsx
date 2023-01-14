@@ -15,6 +15,8 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from '@mui/material'
@@ -33,11 +35,22 @@ type Props = {
 }
 
 const DefaultLayout: FC<Props> = ({ children }) => {
+  const [account, setAccount] = useState<string>('')
+  const [accountMenu, setAccountMenu] = useState<null | HTMLElement>(null)
   const [web3auth, _] = useContext(Web3AuthContext)
   const [web3AuthProvider, setWeb3AuthProvider] = useContext(Web3AuthProviderContext)
   const [anchor, setAnchor] = useState<boolean>(false)
 
   const router = useRouter()
+
+  const open = Boolean(accountMenu)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAccountMenu(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAccountMenu(null);
+  };
 
   const handlerSignOut = async () => {
     if (!web3auth) {
@@ -57,6 +70,9 @@ const DefaultLayout: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (!web3AuthProvider) {
       router.push('/signin')
+    } else {
+      setAccount(web3AuthProvider.selectedAddress)
+      console.log(web3AuthProvider.selectedAddress)
     }
   }, [web3AuthProvider, router])
 
@@ -82,9 +98,27 @@ const DefaultLayout: FC<Props> = ({ children }) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {SERVICE_NAME}
           </Typography>
-          <Button color="inherit" onClick={() => handlerSignOut()}>
-            Sign Out
+          <Button
+            id="account-button"
+            color="inherit"
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          >
+            {`${account.slice(0, 6)}...${account.slice(-6)}`}
           </Button>
+          <Menu
+            id="account-menu"
+            anchorEl={accountMenu}
+            open={open}
+            onClose={handleClose}
+            MenuListProps={{
+              'aria-labelledby': 'account-button',
+            }}
+          >
+            <MenuItem onClick={() => handlerSignOut()}>Sign Out</MenuItem>
+          </Menu>
         </Toolbar>
       </AppBar>
       <Drawer anchor="left" variant="temporary" open={anchor} onClose={() => setAnchor(false)}>
