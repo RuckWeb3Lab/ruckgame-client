@@ -7,6 +7,7 @@ import type { AppProps } from 'next/app'
 import type { ReactElement, ReactNode } from 'react'
 import { Web3Auth } from '@web3auth/modal'
 import { OpenloginAdapter } from '@web3auth/openlogin-adapter'
+import { web3AuthOptions, openloginAdapterOptions, modalConfig } from '@/globals/web3AuthConfig'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -15,9 +16,6 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
-
-const clientId =
-  'BAVw6bQNDV2dWhShQ-dKV6dxuW2_zt50WdPMSpVzNUTCCFOYnSeZH_caCB6n9mu7o1-kmTtQCi95EtCb14h3e7c'
 
 export const Web3AuthContext = createContext<any>([null, () => {}])
 export const Web3AuthProviderContext = createContext<any>([null, () => {}])
@@ -29,106 +27,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     const init = async () => {
       try {
-        const web3auth = new Web3Auth({
-          clientId,
-          chainConfig: {
-            chainNamespace: CHAIN_NAMESPACES.EIP155,
-            chainId: '0x5',
-            rpcTarget: 'https://eth-goerli.g.alchemy.com/v2/Y4PZBcYureGZiAC4cTvo8wsabTI5SVnt',
-          },
-          uiConfig: {
-            theme: 'dark',
-            loginMethodsOrder: ['twitter'],
-            appLogo: 'https://web3auth.io/images/w3a-L-Favicon-1.svg',
-            defaultLanguage: 'ja',
-          },
-        })
-
-        const openloginAdapter = new OpenloginAdapter({
-          adapterSettings: {
-            network: 'cyan',
-            uxMode: 'popup',
-            whiteLabel: {
-              name: 'Your app Name',
-              logoLight: 'https://web3auth.io/images/w3a-L-Favicon-1.svg',
-              logoDark: 'https://web3auth.io/images/w3a-D-Favicon-1.svg',
-              defaultLanguage: 'en',
-              dark: true, // whether to enable dark mode. defaultValue: false
-            },
-          },
-        })
+        const web3auth = new Web3Auth(web3AuthOptions)
+        const openloginAdapter = new OpenloginAdapter(openloginAdapterOptions)
 
         web3auth.configureAdapter(openloginAdapter)
         setWeb3auth(web3auth)
 
-        // DOCS: https://web3auth.io/docs/sdk/web/modal/whitelabel
-        // "google", "facebook", "twitter", "reddit", "discord", "twitch", "apple", "line", "github", "kakao", "linkedin", "weibo", "wechat", "email_passwordless
-        await web3auth.initModal({
-          modalConfig: {
-            [WALLET_ADAPTERS.OPENLOGIN]: {
-              label: 'openlogin',
-              loginMethods: {
-                twitter: {
-                  name: 'twitter',
-                  showOnModal: false,
-                },
-                facebook: {
-                  name: 'facebook',
-                  showOnModal: false,
-                },
-                google: {
-                  name: 'google',
-                  showOnModal: false,
-                },
-                reddit: {
-                  name: 'reddit',
-                  showOnModal: false,
-                },
-                discord: {
-                  name: 'discord',
-                  showOnModal: false,
-                },
-                twitch: {
-                  name: 'twitch',
-                  showOnModal: false,
-                },
-                apple: {
-                  name: 'apple',
-                  showOnModal: false,
-                },
-                line: {
-                  name: 'line',
-                  showOnModal: false,
-                },
-                github: {
-                  name: 'github',
-                  showOnModal: false,
-                },
-                kakao: {
-                  name: 'kakao',
-                  showOnModal: false,
-                },
-                linkedin: {
-                  name: 'linkedin',
-                  showOnModal: false,
-                },
-                weibo: {
-                  name: 'weibo',
-                  showOnModal: false,
-                },
-                wechat: {
-                  name: 'wechat',
-                  showOnModal: false,
-                },
-                email_passwordless: {
-                  name: 'email',
-                  showOnModal: false,
-                },
-              },
-              showOnModal: true,
-            },
-          },
-        })
+        await web3auth.initModal({ modalConfig })
 
         setWeb3AuthProvider(web3auth.provider)
       } catch (error) {
