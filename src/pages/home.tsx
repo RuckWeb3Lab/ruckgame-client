@@ -21,27 +21,24 @@ const HomePage: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (!web3auth) return
-    web3auth.connect()
-      .then((res: any) => {
-        setAccount(res.selectedAddress)
-      })
+    web3auth.connect().then((res: any) => {
+      setAccount(res.selectedAddress)
+    })
   }, [web3auth])
 
   useEffect(() => {
     if (!provider) return
     const ethersRpc = new RuckNftContract(provider)
-    ethersRpc
-      .getContract()
-      .then((ruckNftContract) => {
-        setContract(ruckNftContract)
-      })
+    ethersRpc.getContract().then((ruckNftContract) => {
+      setContract(ruckNftContract)
+    })
   }, [provider])
 
   useEffect(() => {
     if (!contract) return
     if (!account) return
 
-    (async () => {
+    ;(async () => {
       const totalSupply = await contract.totalSupply()
       const balance = await contract.balanceOf(account)
 
@@ -51,13 +48,13 @@ const HomePage: NextPageWithLayout = () => {
       }[] = []
       for (let tokenId = 1; tokenId < totalSupply.toNumber(); tokenId++) {
         const owner = await contract.ownerOf(tokenId)
-        const isOwner = (owner.toUpperCase() === account.toUpperCase())
-        
+        const isOwner = owner.toUpperCase() === account.toUpperCase()
+
         if (isOwner) {
           const tokenUri = await contract.tokenURI(tokenId)
           tokens.push({
             tokenId,
-            tokenUri
+            tokenUri,
           })
         }
 
@@ -77,7 +74,7 @@ const HomePage: NextPageWithLayout = () => {
           name: data.name,
           description: data.description,
           image: data.image,
-          attributes: data.attributes
+          attributes: data.attributes,
         })
       }
 
@@ -100,16 +97,16 @@ const HomePage: NextPageWithLayout = () => {
                 <CardMedia component="img" sx={{ width: 151 }} image={token.image} alt="NFT" />
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                   <CardContent>
-                  <Box>
-                    <Typography component="div" variant="h6" sx={{ fontWeight: 'bold' }}>
-                      {token.name}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ py: 1 }}>
-                    <Typography component="div" variant="body1">
-                      {token.description}
-                    </Typography>
-                  </Box>
+                    <Box>
+                      <Typography component="div" variant="h6" sx={{ fontWeight: 'bold' }}>
+                        {token.name}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ py: 1 }}>
+                      <Typography component="div" variant="body1">
+                        {token.description}
+                      </Typography>
+                    </Box>
                   </CardContent>
                 </Box>
               </Card>

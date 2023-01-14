@@ -46,11 +46,11 @@ const DefaultLayout: FC<Props> = ({ children }) => {
   const open = Boolean(accountMenu)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAccountMenu(event.currentTarget);
-  };
+    setAccountMenu(event.currentTarget)
+  }
   const handleClose = () => {
-    setAccountMenu(null);
-  };
+    setAccountMenu(null)
+  }
 
   const handlerSignOut = async () => {
     if (!web3auth) {

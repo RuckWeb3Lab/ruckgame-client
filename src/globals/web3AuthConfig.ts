@@ -16,7 +16,7 @@ export const web3AuthOptions: Web3AuthOptions = {
     loginMethodsOrder: ['twitter'],
     appLogo: 'https://web3auth.io/images/w3a-L-Favicon-1.svg',
     defaultLanguage: 'ja',
-  }
+  },
 }
 
 export const openloginAdapterOptions: OpenloginAdapterOptions = {
