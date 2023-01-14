@@ -35,7 +35,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="down" ref={ref} {...props} />
 })
 
-const TxResultDialog = ({ open, setOpen, options }: Props) => {
+const TransactionResultDialog = ({ open, setOpen, options }: Props) => {
   const goto = (txHash: string) => {
     const url = `https://goerli.etherscan.io/tx/${txHash}`
     window.open(url, '_blank')
@@ -70,4 +70,4 @@ const TxResultDialog = ({ open, setOpen, options }: Props) => {
   )
 }
 
-export default TxResultDialog
+export default TransactionResultDialog

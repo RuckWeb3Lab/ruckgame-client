@@ -16,7 +16,7 @@ import Grid from '@mui/material/Unstable_Grid2'
 // Component
 import DefaultLayout from '@/components/layout/DefaultLayout'
 import NftDetailDialog from '@/components/dialog/NftDetailDialog'
-import TxResultDialog from '@/components/dialog/txResultDialog'
+import TransactionResultDialog from '@/components/dialog/TransactionResultDialog'
 // Type
 import type { NextPageWithLayout } from '@/pages/_app'
 // Util
@@ -220,7 +220,7 @@ const HomePage: NextPageWithLayout = () => {
         pendding={pendding}
       />
 
-      <TxResultDialog
+      <TransactionResultDialog
         open={txResultDialog}
         setOpen={setTxResultDialog}
         options={txResultDialogOptions}
