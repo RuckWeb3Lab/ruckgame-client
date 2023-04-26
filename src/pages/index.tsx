@@ -3,6 +3,7 @@ import { SERVICE_NAME } from '@/globals/constants'
 import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from '@mui/material'
 import Grid from '@mui/material/Unstable_Grid2'
 import GuestLayout from '@/components/layout/GuestLayout'
+
 import type { NextPageWithLayout } from '@/pages/_app'
 
 const IndexPage: NextPageWithLayout = () => {
