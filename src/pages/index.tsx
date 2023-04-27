@@ -4,7 +4,6 @@ import { Box, Button, Card, CardActions, CardContent, Chip, Typography } from '@
 import Grid from '@mui/material/Unstable_Grid2'
 import GuestLayout from '@/components/layout/GuestLayout'
 
-
 import type { NextPageWithLayout } from '@/pages/_app'
 
 const IndexPage: NextPageWithLayout = () => {
